@@ -21,13 +21,12 @@ import { setCurrentUser } from './redux/user/user-actions';
 //
 const App = ({ fctCurrentUser, currentUser }) => {
 
-  /*methode indicatrice pour stopper listening/subscription apres un unmount 
-    afin de stopper un eventuel Memory Leaks occasionne ainsi
+  /*methode unsuscribeFromAuth indicatrice pour stopper listening/subscription apres un unmount afin de stopper un eventuel Memory Leaks occasionne ainsi
    use ComponentWillUnmount to stop listening from Firebase fct .onAuthStateChanged
    Stop Memory Leaks with componentWillUnmount Lifecycle Method in React
   */
   //methode de classe declaree ici, par defaut nulle. puis definie ds le DidMount
-  // const unsuscribeFromAuth = () => null;
+  // const unsuscribeFromAuth = null;
 
   /*save the unsubscribe reference on the class instance (this.)
    and later just read it from the class instance again: this.unsubscribe()
@@ -37,8 +36,8 @@ const App = ({ fctCurrentUser, currentUser }) => {
   // });
 
   useEffect(() => {
-
-    // const unsuscribeFromAuth = () => {
+    // unsuscribeFromAuth storing the unsuscribe function sent back by onSnapshot for cleaning listener when WillUnmount for avoiding memory leaks :
+    const unsuscribeFromAuth = 
 
     auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -101,21 +100,14 @@ const App = ({ fctCurrentUser, currentUser }) => {
     // }
     // unsuscribeFromAuth()
     return () => {
+      // 'Clean up fct': triggering unsuscribeFromAuth storing the unsuscribe function sent back by onSnapshot for cleaning listener when WillUnmount for avoiding memory leaks :
       // console.log("WillUnMount unsuscribeFromAuth =", unsuscribeFromAuth);
-      // unsuscribeFromAuth();
-      // this.unsubscribe();
-      console.log("componentWillUnmount triggered");
+      unsuscribeFromAuth();
+      // console.log("componentWillUnmount triggered");
     }
   }, [fctCurrentUser]
   );
-  /*
-    componentWillUnmount() {
-      console.log("WillUnMount this.unsuscribeFromAuth =", this.unsuscribeFromAuth);
-      this.unsuscribeFromAuth();
-      // this.unsubscribe();
-      console.log("componentWillUnmount triggered");
-    }
-  */
+
   return (
     <div className="App bigLow">
       {/*

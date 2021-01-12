@@ -58,7 +58,7 @@ const HeaderComponent = ({ currentUser, hidden }) => {
                     <span>
                         {'\u00A0'}{'\u00A0'}
                     </span>
-                    <div>
+                    <div className="snow-buttons-container">
                         <Link to='./hooksTests' className="link3">
                             HOOKS test Component
                         </Link>

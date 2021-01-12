@@ -46,7 +46,7 @@ class CustomButton2 extends Component {
         // -> and re-adding the class
         // elementToBounce.classList.remove("bounce");
         /* eslint-disable no-loop-func */
-        setTimeout(function () { elementToBounce.classList.remove('bounce'); }, 1200);
+        setTimeout(function () { elementToBounce.classList.remove('bounce'); }, 1000);
     };
     render() {
         return (
